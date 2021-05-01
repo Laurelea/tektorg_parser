@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Current tenders</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <th>№</th>
+        <th>Title</th>
+        <th>Number</th>
+        <th>Link</th>
+    </tr>
+<%
+if(tenders.length!=0){
+    var i=1;
+    tenders.forEach(function(data){
+
+        data.forEach(function (tender) {
+
+
+%>
+    <tr>
+        <td><%=i; %></td>
+        <td><%=tender.title %></td>
+        <td><%=tender.number %></td>
+        <td><a href="<%=tender.href %>"><%=tender.href %></a></td>
+    </tr>
+    <%  i++; })
+    })%>
+    <% } else{ %>
+        <tr>
+            <td colspan="7">No Data Found</td>
+        </tr>
+    <% } %>
+</table>
+<footer>
+<script src="../parser.js"></script>
+<script type="text/javascript" src="jquery.js"></script>
+</footer>
+</body>
+</html>

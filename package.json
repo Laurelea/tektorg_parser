@@ -1,0 +1,21 @@
+{
+  "name": "tektorg_parser.local",
+  "version": "1.0.0",
+  "description": "tektorg parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "author": "p.sukhorukova",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.6",
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "nodemon": "^2.0.7",
+    "request": "^2.88.2",
+    "ejs": "^2.6.2"
+  }
+}
