@@ -2,6 +2,7 @@ const request = require('request')
 const cheerio = require('cheerio')
 const moment = require('moment')
 const readline = require('readline')
+const filter = require('./filter')
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -45,7 +46,7 @@ async function getInfoFromPage(url, page) {
         result.push($(el))
     })
     // console.log("result: ", result)
-    console.log(`Page ${page}: found ${ads.length}`)
+    // console.log(`Page ${page}: found ${ads.length}`)
     const nextPage = $('a[data-cy="pagination__next"]')
     if (nextPage.get(0) && await askQuestion("Next page?")) {
         const nextAds = await getInfoFromPage(nextPage.attr('href'), ++page)
@@ -57,22 +58,26 @@ async function getInfoFromPage(url, page) {
 async function run(url) {
     const result = []
     const ads = await getInfoFromPage(url, 1)
-    console.log(`Total found: ` + ads.length)
+    // console.log(`Total found: ` + ads.length)
 
     for (const inf of ads) {
         const regExp = /(РН)?[0-9]+/
-        let offerData = {
-            title: inf.find('a.section-procurement__item-title').text(),
-            number: inf.find('.section-procurement__item-numbers span').text().trim().match(regExp)[0],
-            href: 'https://www.tektorg.ru' + inf.find('a.section-procurement__item-title').attr('href')
+        // console.log(inf.find('a.section-procurement__item-title').text())
+        //Тут обрабатываем title фильтром. И создаём элемент только с валидным тайтлом
+        const title = inf.find('a.section-procurement__item-title').text()
+        if (filter.filter(title)) {
+            let offerData = {
+                title,
+                number: inf.find('.section-procurement__item-numbers span').text().trim().match(regExp)[0],
+                href: 'https://www.tektorg.ru' + inf.find('a.section-procurement__item-title').attr('href')
 
+            }
+
+            // console.log(offerData.title, offerData.number, offerData.href)
+            result.push(offerData)
         }
-        // console.log(offerData.title, offerData.number, offerData.href)
-        result.push(offerData)
     }
     // console.log("result: ", result)
-
-    //Сюда добавить фильтр
 
     return result
 }

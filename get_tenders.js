@@ -2,7 +2,7 @@ const parser = require('./parser')
 
 const okpd2s = ['20.59.52.192', '28.99.39.190', '25', '26']
 // const okpd2s = ['20.59.52.192', '28.99.39.190']
-const dateToViewFrom = '30.04' + '.2021'
+const dateToViewFrom = '23.07' + '.2021'
 const allTenders = []
 
 async function start(url) {
@@ -23,6 +23,6 @@ module.exports.getTenders = async function () {
         console.log(url)
         await start(url)
     }
-    console.log("allTenders: ", allTenders)
+    console.log("allTenders: ", allTenders.length, "DONE!")
     return allTenders
 }
